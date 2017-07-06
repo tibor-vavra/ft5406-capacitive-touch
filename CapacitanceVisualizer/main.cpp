@@ -12,6 +12,8 @@
 #include <assert.h>
 
 #include "FT5406.hpp"
+#include "FT5426.hpp"
+
 #include "Image.hpp"
 #include "SDLWindow.hpp"
 #include "SDLEventHandler.hpp"
@@ -37,15 +39,17 @@ static bool quit(false);
 
 void sdlDisplayLoop()
 {
-	FT5406 capTouch(1, 0x38, verbose_flag);
+	FT5426 capTouch(1, 0x38, verbose_flag);
+	//FT5406 capTouch(1, 0x38, verbose_flag);
+
 	capTouch.setTestMode();
 
 	SDLWindow win;
 	SDLEventHandler eventHandler;
 	eventHandler.setZoom(16);
 
-	Image background(FT5406::NUM_COLUMNS, FT5406::NUM_ROWS);
-	background.data.resize(FT5406::NUM_COLUMNS * FT5406::NUM_ROWS, 0);
+	Image background(capTouch.NUM_COLUMNS, capTouch.NUM_ROWS);
+	background.data.resize(capTouch.NUM_COLUMNS * capTouch.NUM_ROWS, 0);
 
 	while (!quit)
 	{
@@ -61,7 +65,7 @@ void sdlDisplayLoop()
 			eventHandler.clearShouldSampleBackground();
 		}
 
-		for (int i = 0; i < FT5406::NUM_COLUMNS * FT5406::NUM_ROWS; i++)
+		for (int i = 0; i < capTouch.NUM_COLUMNS * capTouch.NUM_ROWS; i++)
 		{
 			img.data[i] -= background.data[i];
 		}
