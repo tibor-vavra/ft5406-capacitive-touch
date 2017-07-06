@@ -89,7 +89,7 @@ public:
 				throw std::runtime_error("i2c write failed");
 			}
 
-			usleep(100); // Wait at least 100us
+			usleep(25); // Wait at least 100us
 
 #if 0
 			// sample this row
@@ -175,7 +175,7 @@ private:
 				{
 					printf("Got 0x%02x - waiting longer\n", ret);
 				}
-				usleep(1000); // without this, we usually wait something like 17 full i2c transactions.
+				usleep(250); // without this, we usually wait something like 17 full i2c transactions.
 			}
 		}
 	}
